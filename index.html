@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  .myDiv {
+    border: 5px outset red;
+    background-color: lightblue;    
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+      function Application() {
+        return (
+          <div className="myDiv">
+            <h2>This is a heading in a div element</h2>
+            <p>This is some text in a div element.</p>
+          </div>
+        )
+      }
+
+      ReactDOM.render(<Application />, document.getElementById('app'));
+    </script>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+</body>
+</html>
