@@ -15,17 +15,33 @@
 <body>
     <div id="app"></div>
     <script type="text/babel" src="./loaded-component.js"></script>
-	
     <script type="text/babel">
       function Application() {
         return (
-          <div className="myDiv">
-            <h2>This is a heading in a div element</h2>
-            <p>This is some text in a div element.</p>
+          <div>
+            Non-lazyloaded: <LoadedComponent/><br/>
+            Lazyloaded: <LazyLoadedComponent src={"./loaded-component.js"} />
           </div>
         )
       }
-	  ReactDOM.createRoot(document.getElementById('app')).render(<LoadedComponent />);
+
+      function LazyLoadedComponent({src}) {
+        const [ code, setCode ] = React.useState("");
+
+        React.useEffect(() => {
+          fetch(src)
+          .then(a => a.text())
+          .then(a => {
+              const code = Babel.transform(`(() => ${a})()`, {
+                presets: ['es2015', 'react']
+              }).code;
+              setCode(code);
+          });
+        }, []);
+
+        return code && eval(code)();
+      }
+	    ReactDOM.createRoot(document.getElementById('app')).render(<Application/>);
     </script>
     <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
     <!-- https://unpkg.com/react@18.2.0/umd/react.production.min.js -->
